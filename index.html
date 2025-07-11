@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Zozo Waifu Countdown 💗</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fdf0f5;
+      overflow-x: hidden;
+      height: 100vh;
+    }
+
+    header {
+      background: #ff4e8b;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #ffe2ee;
+      padding: 10px;
+      gap: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #ff2975;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    section {
+      padding: 30px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    #countdown {
+      font-size: 36px;
+      font-weight: bold;
+      color: #e91e63;
+      margin-top: 20px;
+    }
+
+    #comingSoon {
+      font-size: 48px;
+      color: #d81b60;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    #girl {
+      position: absolute;
+      width: 120px;
+      height: auto;
+      bottom: 0;
+      animation: walk 15s linear infinite;
+      z-index: 10;
+    }
+
+    @keyframes walk {
+      0% { left: -150px; }
+      100% { left: 100vw; }
+    }
+
+    #speech {
+      position: absolute;
+      background: #ffffffcc;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 16px;
+      color: #d81b60;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+
+<header>👾 ZOZO PROJECT – The Friendly AI</header>
+
+<nav>
+  <a href="#">Home</a>
+  <a href="#">Features</a>
+  <a href="#">Gallery</a>
+  <a href="#">Download</a>
+</nav>
+
+<section>
+  <div id="comingSoon">🚀 COMING SOON...</div>
+  <div id="countdown">Loading...</div>
+  <p>Zozo is your AI friend, your assistant, your digital bestie.  
+  Big launch coming in 3 years. Get ready for something awesome.</p>
+</section>
+
+<!-- Waifu -->
+<img id="girl" src="https://media.tenor.com/OVQe8KM9xy0AAAAi/maxgames331535-zero-two.gif" alt="Zero Two">
+<div id="speech">Aah~ 💗</div>
+
+<!-- Audio -->
+<audio id="voice" playsinline>
+  <source src="https://cdn.pixabay.com/download/audio/2023/03/06/audio_2c06b7db47.mp3?filename=anime-girl-voice-1486.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // Countdown
+  const countdown = document.getElementById("countdown");
+  const launchDate = new Date();
+  launchDate.setFullYear(launchDate.getFullYear() + 3);
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = launchDate - now;
+
+    if (distance < 0) {
+      countdown.innerHTML = "🎉 ZOZO HAS LAUNCHED!";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdown.innerHTML = `${days}d ${hours}h ${mins}m ${secs}s left`;
+  }
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  // Voice + 💭
+  const girl = document.getElementById('girl');
+  const voice = document.getElementById('voice');
+  const speech = document.getElementById('speech');
+
+  document.addEventListener('click', function(e) {
+    const rect = girl.getBoundingClientRect();
+
+    if (
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom
+    ) {
+      // Show speech bubble above waifu
+      speech.style.left = rect.left + 'px';
+      speech.style.top = (rect.top - 30) + 'px';
+      speech.style.display = 'block';
+
+      setTimeout(() => {
+        speech.style.display = 'none';
+      }, 1000);
+
+      // Play sound
+      voice.currentTime = 0;
+      voice.play();
+    }
+  });
+</script>
+
+</body>
+</html>
